@@ -50,7 +50,6 @@ import { ElMessageBox } from 'element-plus'
 
 import MonacoEditor from './components/MonacoEditor.vue'
 
-import localStorage from '@/utils/localStorage'
 import { THEME_OPTIONS } from '@/utils/option'
 
 import useLike from '@/hooks/useLike'
@@ -60,25 +59,8 @@ const { open, like, resetLike } = useLike()
 const defInfo = reactive({ path: '' })
 
 onBeforeMount(async () => {
-  await checkPswd()
-
   defInfo.path = await getPath()
 })
-
-const checkPswd = async () => {
-  if (localStorage.get('pswd')) {
-    return
-  }
-
-  await ElMessageBox.prompt('请输入访问密钥', '提示', {
-    confirmButtonText: '确认',
-    cancelButtonText: '取消',
-  }).then(({ value }) => {
-    if (value) {
-      localStorage.set('pswd', value)
-    }
-  })
-}
 
 const getPath = async (): Promise<string> => {
   const query = new URLSearchParams(window.location.search).get('path') || ''

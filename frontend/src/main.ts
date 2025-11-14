@@ -8,6 +8,8 @@ import 'normalize.css'
 import 'element-plus/theme-chalk/el-input.css'
 import 'element-plus/theme-chalk/el-message.css'
 import 'element-plus/theme-chalk/el-message-box.css'
+
+import '@/utils/monaco'
 ;(window as any).Buffer = Buffer
 
 createApp(App).mount('#app')

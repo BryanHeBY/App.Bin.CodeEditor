@@ -28,8 +28,6 @@
 
     <div style="flex: 1"></div>
 
-    <el-button size="small" @click="resetPswd()">清除密钥</el-button>
-
     <el-select
       v-model="code.lang"
       style="width: 120px"
@@ -106,7 +104,7 @@ const { code, save } = useCode({ path: $props.path, confirm: () => editorLike.co
 
 const { editorDidMount, changeLang, changeTheme, changeSize } = useEditor({ onSave: save })
 
-const { resetPath, resetPswd } = useReset({ isDiff: () => code.value !== code.org })
+const { resetPath } = useReset({ isDiff: () => code.value !== code.org })
 
 const changeEncode = async (v: string) => {
   const buffer = await code.blob.arrayBuffer()

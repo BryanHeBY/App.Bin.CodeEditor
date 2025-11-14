@@ -1,7 +1,5 @@
 import { ElMessageBox } from 'element-plus'
 
-import localStorage from '@/utils/localStorage'
-
 export default function useReset(option: { isDiff: () => boolean }) {
   const resetCode = () => {
     if (option.isDiff()) {
@@ -26,10 +24,5 @@ export default function useReset(option: { isDiff: () => boolean }) {
     })
   }
 
-  const resetPswd = () => {
-    localStorage.remove('pswd')
-    window.location.reload()
-  }
-
-  return { resetCode, resetPath, resetPswd }
+  return { resetCode, resetPath }
 }

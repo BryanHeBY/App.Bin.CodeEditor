@@ -3,7 +3,6 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import axios from 'axios'
 
 import { HOST } from '@/utils/env'
-import localStorage from '@/utils/localStorage'
 import { LANG_MAP } from '@/utils/option'
 
 interface CodeModel {
@@ -24,13 +23,11 @@ export default function useCode(option: { path: string; confirm: () => boolean }
         return ''
       }
 
-      const { data } = await axios.post(
-        `${HOST}/read`,
-        { path, pswd: localStorage.get('pswd') },
-        {
-          responseType: 'blob',
-        },
-      )
+      const { data } = await axios.get(HOST, {
+        params: { path },
+        responseType: 'blob',
+        headers: { 'api-path': 'read' },
+      })
 
       code.blob = data
 
@@ -68,12 +65,17 @@ export default function useCode(option: { path: string; confirm: () => boolean }
 
   const upload = async () => {
     try {
-      const { data: value }: any = await axios.post(`${HOST}/save`, {
-        encode: code.encode,
-        value: code.value,
-        path: option.path,
-        pswd: localStorage.get('pswd') || '',
-      })
+      const { data: value }: any = await axios.post(
+        HOST,
+        {
+          encode: code.encode,
+          value: code.value,
+          path: option.path,
+        },
+        {
+          headers: { 'api-path': 'save' },
+        },
+      )
 
       if (value.code === 200) {
         ElMessage({ type: 'success', message: '操作成功' })

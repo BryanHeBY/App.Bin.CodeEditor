@@ -8,6 +8,6 @@
     "build:frontend": "npm run build --prefix=frontend",
     "build:backend": "npm run build --prefix=backend",
     "build:app": "npm run build:frontend && npm run build:backend",
-    "build": "npm run build:app && fnpack build code.editor"
+    "build": "npm run build:app && fnpack build app"
   }
 }

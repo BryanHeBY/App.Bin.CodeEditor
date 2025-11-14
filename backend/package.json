@@ -1,27 +1,16 @@
 {
   "name": "code.editor.server",
-  "bin": "./src/app.js",
   "scripts": {
-    "dev": "node src/app.js",
-    "build": "pkg . --output ../code.editor/app/server/run"
+    "dev": "node src/koa.js",
+    "build": "pkg -t node16-linux-x64 ./src/cgi.js --output ../app/app/server/api"
   },
   "dependencies": {
     "@koa/cors": "^5.0.0",
     "iconv-lite": "^0.7.0",
     "koa": "^3.1.1",
-    "koa-bodyparser": "^4.4.1",
-    "koa-router": "^14.0.0",
-    "koa-static": "^5.0.0"
+    "koa-bodyparser": "^4.4.1"
   },
   "devDependencies": {
     "pkg": "^5.8.1"
-  },
-  "pkg": {
-    "assets": [
-      "./src/public/**/*"
-    ],
-    "targets": [
-      "node18-linux-x64"
-    ]
   }
 }

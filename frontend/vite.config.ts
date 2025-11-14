@@ -1,4 +1,5 @@
 import { fileURLToPath, URL } from 'node:url'
+import path from 'node:path'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -9,14 +10,21 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
-import monacoEditorPlugin from 'vite-plugin-monaco-editor'
+// 这里是服务器的地址
+const CGI_PATH = '/cgi/ThirdParty/code.editor/api.cgi'
+const FILE_PATH = '_api=read&path=/var/apps/code.editor/target/server/dist'
 
-// https://vite.dev/config/
 export default defineConfig({
   build: {
-    // 因为 monacoEditorPlugin 的 BUG，只能用相对路径
-    outDir: '../backend/src/public',
+    outDir: path.join(__dirname, '../app/app/server/dist'),
     emptyOutDir: true,
+
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+        inlineDynamicImports: true,
+      },
+    },
   },
 
   plugins: [
@@ -31,9 +39,30 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
 
-    monacoEditorPlugin({
-      customWorkers: [],
-    }),
+    process.env.NODE_ENV === 'development'
+      ? undefined
+      : {
+          name: 'replace-file-loader',
+          transformIndexHtml(html) {
+            return html.replace(/(src|href)="([^"]*\.(js|css|ico))"/g, (match, attr, path) => {
+              return `${attr}="${CGI_PATH}?${FILE_PATH}${path}"`
+            })
+          },
+          generateBundle(_, bundle) {
+            Object.keys(bundle).forEach((fileName) => {
+              const chunk = bundle[fileName] as any
+
+              if (fileName.endsWith('.css')) {
+                chunk.source = chunk.source.replace(
+                  /url\(\s*['"]?(\/assets\/[^'")]*)['"]?\s*\)/g,
+                  (match: string, path: string) => {
+                    return match.replace(path, `${CGI_PATH}?${FILE_PATH}${path}`)
+                  },
+                )
+              }
+            })
+          },
+        },
   ],
 
   resolve: {
