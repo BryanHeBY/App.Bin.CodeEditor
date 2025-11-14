@@ -2,7 +2,7 @@
   <div class="header">
     <div class="title">{{ $props.path }}</div>
 
-    <el-button size="small" @click="resetPath()">修改路径</el-button>
+    <el-button size="small" @click="$emit('reset')">切换文件</el-button>
 
     <div style="flex: 1"></div>
 
@@ -72,10 +72,9 @@ import { LANG_OPTIONS, ENCODING_OPTIONS } from '@/utils/option'
 import { type LikeModel } from '../hooks/useLike'
 import useCode from '../hooks/useCode'
 import useEditor from '../hooks/useEditor'
-import useReset from '../hooks/useReset'
 
 const $props = defineProps<{ path: string; like: LikeModel }>()
-const $emit = defineEmits<{ like: [] }>()
+const $emit = defineEmits<{ like: []; reset: [] }>()
 
 watch(
   () => $props.like.confirm,
@@ -103,8 +102,6 @@ const editorLike = reactive({ ...$props.like })
 const { code, save } = useCode({ path: $props.path, confirm: () => editorLike.confirm })
 
 const { editorDidMount, changeLang, changeTheme, changeSize } = useEditor({ onSave: save })
-
-const { resetPath } = useReset({ isDiff: () => code.value !== code.org })
 
 const changeEncode = async (v: string) => {
   const buffer = await code.blob.arrayBuffer()
