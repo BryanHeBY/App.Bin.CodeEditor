@@ -12,6 +12,8 @@
 
 VS Code 同源库，支持多种编码文件的操作，更有语法高亮、代码补全。
 
+![示例](./docs/example.png)
+
 ## 本地运行
 
 ```bash
@@ -24,7 +26,7 @@ npm run dev:backend
 
 ## 本地构建
 
-> 请提前安装好 fnpack，如果不希望打包 fpk，可以执行 build:app
+> 请提前安装好 fnpack，如果不希望打包 fpk，可以执行 build:server
 
 ```bash
 npm run install
