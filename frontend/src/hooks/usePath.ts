@@ -3,13 +3,12 @@ import { onMounted, reactive, ref } from 'vue'
 
 export default function usePath() {
   const view = reactive<{ path: string; diff: boolean }[]>([])
-  const active = ref('')
+  const active = ref(0)
 
   onMounted(async () => {
     const query = new URLSearchParams(window.location.search).get('path') || ''
     if (query) {
       view.push({ path: query, diff: false })
-      active.value = query
     } else {
       add(true)
     }
@@ -33,18 +32,16 @@ export default function usePath() {
       .catch(() => '')
 
     if (value) {
-      const item = view.find((i) => i.path === value)
-      if (item) {
-        active.value = item.path
+      const index = view.findIndex((i) => i.path === value)
+      if (index > -1) {
+        active.value = index
       } else {
-        view.push({ path: value, diff: false })
-        active.value = value
+        active.value = view.push({ path: value, diff: false }) - 1
       }
     }
   }
 
-  const remove = async (path: string) => {
-    const index = view.findIndex((i) => i.path === path)
+  const remove = async (index: number) => {
     const item = view[index]
     if (item) {
       if (item.diff) {
@@ -59,8 +56,10 @@ export default function usePath() {
         }
       }
 
-      if (active.value === item.path) {
-        active.value = (view[index + 1] || view[index - 1])?.path || ''
+      if (index === active.value) {
+        active.value += view[index + 1] ? 0 : -1
+      } else if (index < active.value) {
+        active.value--
       }
 
       view.splice(index, 1)

@@ -14,6 +14,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     ElButton: typeof import('element-plus/es')['ElButton']
     ElDialog: typeof import('element-plus/es')['ElDialog']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElSelect: typeof import('element-plus/es')['ElSelect']
@@ -29,6 +30,7 @@ declare module 'vue' {
 declare global {
   const ElButton: typeof import('element-plus/es')['ElButton']
   const ElDialog: typeof import('element-plus/es')['ElDialog']
+  const ElIcon: typeof import('element-plus/es')['ElIcon']
   const ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
   const ElOption: typeof import('element-plus/es')['ElOption']
   const ElSelect: typeof import('element-plus/es')['ElSelect']

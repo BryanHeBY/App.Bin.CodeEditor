@@ -1,27 +1,40 @@
 <template>
-  <el-tabs
-    class="view"
-    v-model="active"
-    type="card"
-    addable
-    :closable="view.length > 1"
-    @edit="viewEdit"
-  >
-    <el-tab-pane v-for="item in view" :key="item.path" :name="item.path">
+  <el-tabs class="view" v-model="active" type="card" closable @tab-remove="remove">
+    <el-tab-pane v-for="(item, i) in view" :key="item.path" :name="i">
       <template #label>
         <el-tooltip :content="item.path">
-          <div class="label" :class="item.diff ? 'diff' : ''">{{ item.path.split('/').pop() }}</div>
+          <div>{{ item.path.split('/').pop() }}</div>
         </el-tooltip>
+
+        <div v-show="item.diff" class="diff"></div>
       </template>
 
       <MonacoEditor
+        ref="editorRef"
         :path="item.path"
         :like="like"
         @like="() => (open = !open)"
         @diff="(v) => (item.diff = v)"
       />
     </el-tab-pane>
+
+    <el-tab-pane :name="-1" disabled>
+      <template #label>
+        <div class="add" @click="add()">
+          <el-icon><Plus /></el-icon>
+        </div>
+      </template>
+    </el-tab-pane>
   </el-tabs>
+
+  <el-button
+    size="small"
+    class="save"
+    v-bind="view?.[active]?.diff ? { type: 'primary' } : { disabled: true }"
+    @click="editorRef?.[active]?.save"
+  >
+    保存
+  </el-button>
 
   <el-dialog v-model="open" title="偏好设置" width="300">
     <div class="like-dialog">
@@ -67,6 +80,9 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import { Plus } from '@element-plus/icons-vue'
+
 import MonacoEditor from './components/MonacoEditor.vue'
 
 import { THEME_OPTIONS } from '@/utils/option'
@@ -77,13 +93,7 @@ import usePath from '@/hooks/usePath'
 const { open, like, resetLike } = useLike()
 const { view, active, add, remove } = usePath()
 
-const viewEdit = (v: string, action: 'remove' | 'add') => {
-  if (action === 'add') {
-    add()
-  } else {
-    remove(v)
-  }
-}
+const editorRef = ref<any[]>([])
 </script>
 
 <style lang="scss">
@@ -104,25 +114,38 @@ body,
       margin: 0;
 
       .el-tabs__nav {
-        border-top: none;
         border-radius: 0;
 
         .el-tabs__item {
-          .label {
-            &::after {
-              content: '';
-              display: inline-block;
-              width: 8px;
-              height: 8px;
-              border-radius: 50%;
-              margin-left: 4px;
-            }
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 6px;
 
-            &.diff {
-              &::after {
-                background-color: var(--el-text-color-placeholder);
-              }
+          &.is-disabled {
+            > .add {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              pointer-events: all;
             }
+          }
+
+          .diff {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--el-text-color-placeholder);
+          }
+
+          > * {
+            margin: 0;
           }
         }
       }
@@ -143,6 +166,12 @@ body,
         flex-direction: column;
       }
     }
+  }
+
+  > .save {
+    position: absolute;
+    right: 8px;
+    top: 8px;
   }
 }
 
