@@ -37,11 +37,11 @@ export const LANG_OPTIONS = [...new Set(Object.values(LANG_MAP))].map((t) => ({
   value: t,
 }))
 
-export const THEME_OPTIONS: { label: string; value: string }[] = [
-  { label: 'VS Light', value: 'vs' },
-  { label: 'VS Dark', value: 'vs-dark' },
-  { label: 'High Contrast Black', value: 'hc-black' },
-  { label: 'High Contrast Light', value: 'hc-light' },
+export const THEME_OPTIONS: { label: string; value: string; dark: boolean }[] = [
+  { label: 'VS Light', value: 'vs', dark: false },
+  { label: 'VS Dark', value: 'vs-dark', dark: true },
+  { label: 'High Contrast Light', value: 'hc-light', dark: false },
+  { label: 'High Contrast Black', value: 'hc-black', dark: true },
 ]
 
 export const ENCODING_OPTIONS = [

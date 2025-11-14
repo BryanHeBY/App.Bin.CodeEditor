@@ -65,32 +65,31 @@ const { open, like, resetLike } = useLike()
 
 const defInfo = reactive({ path: '' })
 
-onBeforeMount(async () => {
-  defInfo.path = await getPath()
-})
-
-const getPath = async (): Promise<string> => {
+onBeforeMount(() => {
   const query = new URLSearchParams(window.location.search).get('path') || ''
   if (query) {
-    return query
+    defInfo.path = query
+  } else {
+    inputPath(true)
   }
+})
 
-  return inputPath()
-}
-
-const inputPath = async () => {
+const inputPath = async (force?: boolean) => {
   return await ElMessageBox.prompt(
     '部分文件可在文件管理中双击文件进行编辑，详见应用介绍',
     '请输入文件路径',
     {
+      showClose: false,
+      closeOnClickModal: false,
+      closeOnPressEscape: false,
+      closeOnHashChange: false,
+      showCancelButton: !force,
       confirmButtonText: '确认',
       cancelButtonText: '取消',
     },
   ).then(({ value }) => {
     if (value) {
-      return defInfo.path = value
-    } else {
-      return value
+      defInfo.path = value
     }
   })
 }
@@ -101,6 +100,17 @@ html,
 body,
 #app {
   height: 100%;
+}
+
+html {
+  &.dark {
+    #app {
+      > .header,
+      > .footer {
+        background-color: #1c1c1c;
+      }
+    }
+  }
 }
 
 #app {
@@ -114,7 +124,6 @@ body,
     display: flex;
     align-items: center;
     gap: 4px;
-    background-color: #1c1c1c;
     padding: 0 12px;
 
     > * {
@@ -123,22 +132,22 @@ body,
   }
 
   > .header {
-    border-bottom: solid 1px rgba(255, 255, 255, 0.2);
+    border-bottom: solid 1px var(--el-border-color);
 
     > .title {
       font-size: 14px;
       line-height: 32px;
-      color: #fff;
+      color: var(--el-text-color-primary);
     }
   }
 
   > .footer {
-    border-top: solid 1px rgba(255, 255, 255, 0.2);
+    border-top: solid 1px var(--el-border-color);
 
     > .developed {
       font-size: 12px;
       line-height: 32px;
-      color: gray;
+      color: var(--el-text-color-placeholder);
     }
   }
 

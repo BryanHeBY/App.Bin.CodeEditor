@@ -1,6 +1,7 @@
-import { reactive, ref, toRaw, watch } from 'vue'
+import { onMounted, reactive, ref, toRaw, watch, watchEffect } from 'vue'
 
 import localStorage from '@/utils/localStorage'
+import { THEME_OPTIONS } from '@/utils/option'
 
 export interface LikeModel {
   theme: string
@@ -25,9 +26,16 @@ export default function useCode() {
     localStorage.set(key, toRaw(like))
   })
 
+  watchEffect(() => {
+    const dark = THEME_OPTIONS.find((i) => i.value === like.theme)?.dark
+    document.documentElement.className = dark ? 'dark' : ''
+  })
+
   const resetLike = () => {
     Object.assign(like, { ...defLike })
   }
+
+  onMounted(() => {})
 
   return { open, like, resetLike }
 }
