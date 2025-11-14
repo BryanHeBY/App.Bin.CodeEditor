@@ -35,7 +35,7 @@
       style="width: 120px"
       size="small"
       filterable
-      placement="top-end"
+      placement="top"
       @change="changeEncode"
     >
       <el-option
