@@ -1,6 +1,7 @@
 <template>
-  <div v-if="code.lang" style="flex: 1">
+  <div style="flex: 1">
     <MonacoEditor
+      v-if="code.lang"
       v-model:value="code.value"
       :language="code.lang"
       :theme="like.theme"
