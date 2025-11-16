@@ -1,24 +1,21 @@
+const querystring = require("querystring");
+
 const exec = require("./utils/exec");
 
 // 获取 env、query、body
 async function getData() {
   const env = process.env;
 
-  const result = { api: env.HTTP_API_PATH || "", query: {}, body: {} };
+  const result = {
+    api: env.HTTP_API_PATH || "",
+    query: querystring.parse(env.QUERY_STRING || ""),
+    body: {},
+  };
 
-  // query
-  if (env.QUERY_STRING) {
-    const urlParams = new URLSearchParams(env.QUERY_STRING);
-    for (const [key, value] of urlParams) {
-      result.query[key] = decodeURIComponent(value);
-    }
-  }
-
-  // body
   if (env.REQUEST_METHOD === "POST") {
     const contentLength = parseInt(env.CONTENT_LENGTH || "0");
 
-    if (contentLength !== 0) {
+    if (contentLength > 0) {
       const str = await new Promise((r) => {
         let str = "";
 
@@ -32,7 +29,17 @@ async function getData() {
       });
 
       try {
-        result.body = str ? JSON.parse(str) : {};
+        if (str.trim()) {
+          const type = env.CONTENT_TYPE || "";
+
+          if (type.includes("application/x-www-form-urlencoded")) {
+            result.body = querystring.parse(str);
+          } else if (type.includes("application/json")) {
+            result.body = JSON.parse(str);
+          } else {
+            result.body = { raw: str };
+          }
+        }
       } catch (error) {
         result.body = {};
       }
