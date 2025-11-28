@@ -13,15 +13,18 @@ async function getData() {
 
   if (assets) {
     const path = assets === "/" ? "/index.html" : assets;
+    const cache = assets !== "/";
 
     return {
-      api: "assets",
-      query: { path: `/var/apps/code.editor/target/server/dist${path}` },
+      env,
+      api: "read",
+      query: { path: `/var/apps/code.editor/target/server/dist${path}`, cache },
       body: {},
     };
   }
 
   const result = {
+    env,
     api: env.HTTP_API_PATH || "",
     query: querystring.parse(env.QUERY_STRING || ""),
     body: {},

@@ -20,6 +20,17 @@ module.exports = async function read({ query }) {
     const testFd = fs.openSync(path, "r");
     fs.closeSync(testFd);
 
+    if (query.cache) {
+      const maxAge = 365 * 24 * 60 * 60;
+
+      console.log(`Cache-Control: public, max-age=${maxAge}, immutable`);
+      console.log(
+        `Expires: ${new Date(Date.now() + maxAge * 1000).toUTCString()}`
+      );
+      console.log(`Last-Modified: ${stat.mtime.toUTCString()}`);
+      console.log(`ETag: "${stat.size}-${stat.mtime.getTime()}"`);
+    }
+
     return {
       code: 200,
       msg: "操作成功",
