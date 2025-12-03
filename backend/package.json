@@ -1,7 +1,7 @@
 {
   "name": "code.editor.server",
   "scripts": {
-    "dev": "node src/koa.js",
+    "dev": "node --watch src/koa.js",
     "build": "pkg -t node16-linux-x64 ./src/cgi.js --output ../app/app/server/api"
   },
   "dependencies": {

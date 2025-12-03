@@ -26,6 +26,10 @@ export default function usePath<T>(opt: { key: string; id: keyof T }) {
     }
   }
 
+  const clear = () => {
+    value.splice(0, value.length)
+  }
+
   watch(
     () => value,
     (v) => {
@@ -34,5 +38,5 @@ export default function usePath<T>(opt: { key: string; id: keyof T }) {
     { deep: true },
   )
 
-  return { value, add, remove }
+  return { value, add, remove, clear }
 }

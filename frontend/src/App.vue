@@ -38,7 +38,13 @@
 
   <LikeDialog v-model:open="likeOpen" v-model:like="like" @reset="resetLike()" />
 
-  <PathDialog v-model:open="pathOpen" :history="history.value" @open="add" />
+  <PathDialog
+    v-model:open="pathOpen"
+    :history="history.value"
+    @open="add"
+    @remove="(path) => history.remove({ path })"
+    @clear="history.clear"
+  />
 </template>
 
 <script setup lang="ts">
