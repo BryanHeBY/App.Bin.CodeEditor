@@ -3,9 +3,9 @@ name: Build
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-and-release:
@@ -38,6 +38,16 @@ jobs:
       - name: Update version in manifest file
         run: |
           sed -i "s/version=0.0.1/version=${{ steps.read_version.outputs.version }}/" app/manifest
+
+      - name: Get changelog
+        id: read_log
+        run: |
+          VERSION=$(jq -r '.changelog' package.json)
+          echo "changelog=$CHANGELOG" >> $GITHUB_OUTPUT
+
+      - name: Update changelog in manifest file
+        run: |
+          sed -i "s/changelog=changelog/changelog=${{ steps.read_version.outputs.changelog }}/" app/manifest
 
       - name: Build Package
         run: |
