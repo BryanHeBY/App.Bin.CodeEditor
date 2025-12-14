@@ -1,7 +1,13 @@
 <template>
   <div id="editor-view">
-    <el-tabs class="view" v-model="active" type="card" closable @tab-remove="remove">
-      <el-tab-pane v-for="(item, i) in view" :key="item.path" :name="i">
+    <el-tabs
+      class="view"
+      v-model="editor.active"
+      type="card"
+      closable
+      @tab-remove="editor.view.remove"
+    >
+      <el-tab-pane v-for="(item, i) in editor.view.value" :key="item.path" :name="i">
         <template #label>
           <el-tooltip :content="item.path">
             <div>{{ item.path.split('/').pop() }}</div>
@@ -15,7 +21,7 @@
 
       <el-tab-pane :name="-1" disabled>
         <template #label>
-          <div class="add" @click="() => (pathOpen = true)">
+          <div class="add" @click="open.show = true">
             <el-icon><Plus /></el-icon>
           </div>
         </template>
@@ -25,19 +31,11 @@
     <el-button
       size="small"
       class="save"
-      v-bind="view?.[active]?.diff ? { type: 'primary' } : { disabled: true }"
-      @click="editorRef?.[active]?.save"
+      v-bind="editor.view.value[editor.active]?.diff ? { type: 'primary' } : { disabled: true }"
+      @click="editorRef[editor.active]?.save"
     >
       保存
     </el-button>
-
-    <PathDialog
-      v-model:open="pathOpen"
-      :history="history.value"
-      @open="add"
-      @remove="(path) => history.remove({ path })"
-      @clear="history.clear"
-    />
   </div>
 </template>
 
@@ -46,11 +44,12 @@ import { ref } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
 
 import MonacoEditor from '@/components/MonacoEditor.vue'
-import PathDialog from '@/components/PathDialog.vue'
 
-import usePath from '@/hooks/usePath'
+import { useOpenStore } from '@/store/open'
+import { useEditorStore } from '@/store/editor'
 
-const { open: pathOpen, view, active, add, remove, history } = usePath()
+const open = useOpenStore()
+const editor = useEditorStore()
 
 const editorRef = ref<any[]>([])
 </script>

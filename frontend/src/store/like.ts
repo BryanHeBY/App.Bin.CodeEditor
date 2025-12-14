@@ -29,10 +29,6 @@ export const useLikeStore = defineStore('like', () => {
 
   const cfg: Reactive<LikeModel> = reactive(Object.assign({}, def, localStorage.get(key)))
 
-  const resetCfg = () => {
-    Object.assign(cfg, def)
-  }
-
   return {
     open: ref2model(open),
 
@@ -50,6 +46,8 @@ export const useLikeStore = defineStore('like', () => {
       },
     }),
 
-    resetCfg,
+    resetCfg: () => {
+      Object.assign(cfg, def)
+    },
   }
 })

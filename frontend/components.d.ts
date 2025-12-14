@@ -25,6 +25,7 @@ declare module 'vue' {
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     LikeDialog: typeof import('./src/components/LikeDialog.vue')['default']
     MonacoEditor: typeof import('./src/components/MonacoEditor.vue')['default']
+    OpenDialog: typeof import('./src/components/OpenDialog.vue')['default']
     PathDialog: typeof import('./src/components/PathDialog.vue')['default']
   }
 }
@@ -44,5 +45,6 @@ declare global {
   const ElTooltip: typeof import('element-plus/es')['ElTooltip']
   const LikeDialog: typeof import('./src/components/LikeDialog.vue')['default']
   const MonacoEditor: typeof import('./src/components/MonacoEditor.vue')['default']
+  const OpenDialog: typeof import('./src/components/OpenDialog.vue')['default']
   const PathDialog: typeof import('./src/components/PathDialog.vue')['default']
 }

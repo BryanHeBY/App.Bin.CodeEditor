@@ -1,30 +1,33 @@
 <template>
-  <el-dialog v-model="open" title="打开" width="500">
+  <el-dialog v-model="open.show" title="打开" width="500">
     <el-tabs default-value="file">
       <el-tab-pane label="文件" name="file">
-        <div class="path-dialog">
-          <el-input v-model="input" placeholder="请输入文件路径（不存在的文件编辑后可直接新增）">
+        <div class="view-dialog">
+          <el-input
+            v-model="open.input"
+            placeholder="请输入文件路径（不存在的文件编辑后可直接新增）"
+          >
             <template #append>
-              <el-button @click="openPath">确认</el-button>
+              <el-button @click="editor.view.add(open.input)">确认</el-button>
             </template>
           </el-input>
 
-          <template v-if="history.length">
+          <template v-if="open.history.value.length">
             <div class="title">
               <div class="t">历史记录</div>
-              <el-button size="small" @click="emit('clear')">清除全部</el-button>
+              <el-button size="small" @click="open.history.clear()">清除全部</el-button>
             </div>
 
-            <div class="history" v-if="history.length">
+            <div class="history">
               <div
                 class="item"
-                v-for="item in history"
+                v-for="item in open.history.value"
                 :key="item.path"
-                @click="emit('open', item.path)"
+                @click="editor.view.add(item.path)"
               >
                 <div class="t">{{ item.path }}</div>
                 <div style="flex: 1"></div>
-                <el-icon class="i" @click.stop="emit('remove', item.path)"><Close /></el-icon>
+                <el-icon class="i" @click.stop="open.history.remove(item)"><Close /></el-icon>
               </div>
             </div>
           </template>
@@ -35,29 +38,27 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { onMounted } from 'vue'
 import { Close } from '@element-plus/icons-vue'
 
-defineProps<{ history: { path: string }[] }>()
+import { useOpenStore } from '@/store/open'
+import { useEditorStore } from '@/store/editor'
 
-const emit = defineEmits<{
-  (e: 'open', v: string): void
-  (e: 'remove', v: string): void
-  (e: 'clear'): void
-}>()
+const open = useOpenStore()
+const editor = useEditorStore()
 
-const open = defineModel('open')
-
-const input = ref('')
-
-const openPath = () => {
-  emit('open', input.value)
-  input.value = ''
-}
+onMounted(async () => {
+  const query = new URLSearchParams(window.location.search).get('path') || ''
+  if (query) {
+    editor.view.add(query)
+  } else {
+    open.show = true
+  }
+})
 </script>
 
 <style lang="scss" scoped>
-.path-dialog {
+.view-dialog {
   display: flex;
   flex-direction: column;
 
