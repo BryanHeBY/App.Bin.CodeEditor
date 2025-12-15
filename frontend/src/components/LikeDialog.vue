@@ -1,17 +1,17 @@
 <template>
-  <el-dialog v-model="like.open" title="偏好设置" width="300">
+  <el-dialog v-model="open" title="偏好设置" width="300">
     <div class="like-dialog" v-if="like">
       <div class="item">
         <div class="label">保存确认</div>
         <div class="value">
-          <el-switch v-model="like.cfg.confirm" inline-prompt />
+          <el-switch v-model="cfg.confirm" inline-prompt />
         </div>
       </div>
 
       <div class="item">
         <div class="label">主题样式</div>
         <div class="value">
-          <el-select v-model="like.cfg.theme" size="small">
+          <el-select v-model="cfg.theme" size="small">
             <el-option
               v-for="item in THEME_OPTIONS"
               :key="item.value"
@@ -25,12 +25,7 @@
       <div class="item">
         <div class="label">字体大小</div>
         <div class="value">
-          <el-input-number
-            v-model="like.cfg.editorOption.fontSize"
-            :min="8"
-            :max="100"
-            size="small"
-          />
+          <el-input-number v-model="cfg.editorOption.fontSize" :min="8" :max="100" size="small" />
         </div>
       </div>
 
@@ -38,7 +33,7 @@
         <div class="label">自动换行</div>
         <div class="value">
           <el-switch
-            v-model="like.cfg.editorOption.wordWrap"
+            v-model="cfg.editorOption.wordWrap"
             inline-prompt
             active-value="on"
             inactive-value="off"
@@ -62,7 +57,8 @@
 </template>
 
 <script lang="ts" setup>
-import { watchEffect } from 'vue'
+import { watch, watchEffect } from 'vue'
+import { storeToRefs } from 'pinia'
 
 import { THEME_OPTIONS } from '@/utils/option'
 
@@ -70,11 +66,15 @@ import { useLikeStore } from '@/store/like'
 
 const like = useLikeStore()
 
+const { open, cfg } = storeToRefs(like)
+
 watchEffect(() => {
   document.documentElement.className = THEME_OPTIONS.find((i) => i.value === like.cfg.theme)?.dark
     ? 'dark'
     : ''
 })
+
+watch(cfg, like.saveCfg, { deep: true })
 </script>
 
 <style lang="scss" scoped>

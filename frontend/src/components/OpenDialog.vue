@@ -1,14 +1,11 @@
 <template>
-  <el-dialog v-model="open.show" title="打开" width="500">
+  <el-dialog v-model="show" title="打开" width="500" @closed="input = ''">
     <el-tabs default-value="file">
       <el-tab-pane label="文件" name="file">
         <div class="view-dialog">
-          <el-input
-            v-model="open.input"
-            placeholder="请输入文件路径（不存在的文件编辑后可直接新增）"
-          >
+          <el-input v-model="input" placeholder="请输入文件路径（不存在的文件编辑后可直接新增）">
             <template #append>
-              <el-button @click="editor.view.add(open.input)">确认</el-button>
+              <el-button @click="editor.view.add(input)">确认</el-button>
             </template>
           </el-input>
 
@@ -39,6 +36,7 @@
 
 <script lang="ts" setup>
 import { onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
 import { Close } from '@element-plus/icons-vue'
 
 import { useOpenStore } from '@/store/open'
@@ -47,12 +45,14 @@ import { useEditorStore } from '@/store/editor'
 const open = useOpenStore()
 const editor = useEditorStore()
 
+const { show, input } = storeToRefs(open)
+
 onMounted(async () => {
   const query = new URLSearchParams(window.location.search).get('path') || ''
   if (query) {
     editor.view.add(query)
   } else {
-    open.show = true
+    show.value = true
   }
 })
 </script>

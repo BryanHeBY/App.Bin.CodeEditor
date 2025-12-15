@@ -2,8 +2,6 @@ import { reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
 import { ElMessageBox } from 'element-plus'
 
-import { ref2model } from '@/utils/store2model'
-
 import { useOpenStore } from './open'
 
 interface ViewModel {
@@ -61,7 +59,7 @@ export const useEditorStore = defineStore('editor', () => {
   }
 
   return {
-    active: ref2model(active),
+    active,
 
     view: { value: view, add, remove },
   }

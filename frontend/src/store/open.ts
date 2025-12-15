@@ -2,7 +2,6 @@ import { reactive, ref, toRaw } from 'vue'
 import { defineStore } from 'pinia'
 
 import localStorage from '@/utils/localStorage'
-import { ref2model } from '@/utils/store2model'
 
 const key = 'PATH_HISTORY'
 
@@ -46,15 +45,9 @@ export const useOpenStore = defineStore('open', () => {
   }
 
   return {
-    show: ref2model(show, {
-      onSet(v) {
-        if (!v) {
-          input.value = ''
-        }
-      },
-    }),
+    show,
 
-    input: ref2model(input),
+    input,
 
     history: { value: history, add, remove, clear },
   }

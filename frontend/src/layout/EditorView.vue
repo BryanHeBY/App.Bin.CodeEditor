@@ -1,12 +1,6 @@
 <template>
   <div id="editor-view">
-    <el-tabs
-      class="view"
-      v-model="editor.active"
-      type="card"
-      closable
-      @tab-remove="editor.view.remove"
-    >
+    <el-tabs class="view" v-model="active" type="card" closable @tab-remove="editor.view.remove">
       <el-tab-pane v-for="(item, i) in editor.view.value" :key="item.path" :name="i">
         <template #label>
           <el-tooltip :content="item.path">
@@ -31,8 +25,8 @@
     <el-button
       size="small"
       class="save"
-      v-bind="editor.view.value[editor.active]?.diff ? { type: 'primary' } : { disabled: true }"
-      @click="editorRef[editor.active]?.save"
+      v-bind="editor.view.value[active]?.diff ? { type: 'primary' } : { disabled: true }"
+      @click="editorRef[active]?.save"
     >
       保存
     </el-button>
@@ -41,6 +35,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import { Plus } from '@element-plus/icons-vue'
 
 import MonacoEditor from '@/components/MonacoEditor.vue'
@@ -51,7 +46,9 @@ import { useEditorStore } from '@/store/editor'
 const open = useOpenStore()
 const editor = useEditorStore()
 
-const editorRef = ref<any[]>([])
+const { active } = storeToRefs(editor)
+
+const editorRef = ref<{ save: () => void }[]>([])
 </script>
 
 <style lang="scss">
