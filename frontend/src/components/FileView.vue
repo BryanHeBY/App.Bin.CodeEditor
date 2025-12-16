@@ -58,10 +58,11 @@
 import { Picture, Document } from '@element-plus/icons-vue'
 
 import { LANG_MAP, FILE_MAP } from '@/utils/option'
+import { getFileSuffix } from '@/utils/file'
 
 const $props = defineProps<{ size?: number | string; path: string }>()
 
-const suffix = $props.path.split('.').pop() || ''
+const suffix = getFileSuffix($props.path)
 </script>
 
 <style lang="scss" scoped>

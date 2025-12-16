@@ -6,14 +6,23 @@
           <template #label>
             <el-tooltip :content="item.path">
               <div :style="item.keep ? {} : { fontStyle: 'italic' }" @dblclick="item.keep = true">
-                {{ item.path.split('/').pop() }}
+                {{ getFileName(item.path) }}
               </div>
             </el-tooltip>
 
             <div v-show="item.diff" class="diff"></div>
           </template>
 
+          <div class="img" v-if="FILE_MAP[getFileSuffix(item.path)] === 'img'">
+            <img class="i" :src="getFullPath(item.path)" />
+          </div>
+
+          <div class="no-open" v-else-if="FILE_MAP[getFileSuffix(item.path)]">
+            <div class="t">编辑器不支持该文件</div>
+          </div>
+
           <MonacoEditor
+            v-else
             ref="editorRef"
             :path="item.path"
             @diff="
@@ -58,6 +67,8 @@ import MonacoEditor from '@/components/MonacoEditor.vue'
 
 import { useOpenStore } from '@/store/open'
 import { useEditorStore } from '@/store/editor'
+import { FILE_MAP } from '@/utils/option'
+import { getFileName, getFileSuffix, getFullPath } from '@/utils/file'
 
 const open = useOpenStore()
 const editor = useEditorStore()
@@ -152,6 +163,33 @@ watch(
           height: 100%;
           display: flex;
           flex-direction: column;
+
+          > .img {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            > .i {
+              max-height: 90%;
+              max-width: 90%;
+            }
+          }
+
+          > .no-open {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            > .t {
+              white-space: nowrap;
+              font-size: 14px;
+              color: var(--el-text-color-placeholder);
+            }
+          }
         }
       }
     }
