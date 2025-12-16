@@ -8,6 +8,8 @@ interface LikeModel {
   theme: string
   confirm: boolean
   folderWidth: number
+  folderDefOpen: boolean
+  folderHidePrefix: string[]
   editorOption: {
     fontSize: number
     wordWrap: 'off' | 'on'
@@ -15,9 +17,18 @@ interface LikeModel {
 }
 
 const getDef = (): LikeModel => ({
+  // 全局配置
   theme: 'vs-dark',
-  confirm: true,
-  folderWidth: 240,
+
+  // 安全性
+  confirm: true, // 保存二次确认
+
+  // 目录
+  folderWidth: 300, // 目录宽度
+  folderDefOpen: false, // 默认开启目录
+  folderHidePrefix: ['.'], // 隐藏的文件前缀
+
+  // 编辑器
   editorOption: {
     fontSize: 14,
     wordWrap: 'off',
@@ -41,6 +52,8 @@ export const useLikeStore = defineStore('like', () => {
         theme: cfg.value.theme,
         confirm: cfg.value.confirm,
         folderWidth: cfg.value.folderWidth,
+        folderDefOpen: cfg.value.folderDefOpen,
+        folderHidePrefix: cfg.value.folderHidePrefix,
         editorOption: {
           fontSize: cfg.value.editorOption.fontSize,
           wordWrap: cfg.value.editorOption.wordWrap,

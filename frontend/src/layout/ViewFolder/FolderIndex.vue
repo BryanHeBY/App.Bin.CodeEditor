@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <ClickMove @move="(v) => (like.cfg.folderWidth += v.x)" />
+    <ClickMove @move="(v) => changeFolderWidth(v.x)" />
   </div>
 </template>
 
@@ -25,6 +25,16 @@ import FolderTree from './FolderTree.vue'
 import { useLikeStore } from '@/store/like'
 
 const like = useLikeStore()
+
+const changeFolderWidth = (v: number) => {
+  const newVal = like.cfg.folderWidth + v
+
+  if (newVal > 600 || newVal < 200) {
+    return
+  }
+
+  like.cfg.folderWidth = newVal
+}
 </script>
 
 <style lang="scss">

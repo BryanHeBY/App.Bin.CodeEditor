@@ -3,14 +3,28 @@
     <div class="item" :class="{ active: menu.open.folder }" @click="menu.toggle('folder')">
       <el-icon><Folder /></el-icon>
     </div>
+
+    <div class="item" :class="{ active: like.open }" @click="like.open = true">
+      <el-icon><Setting /></el-icon>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { Folder, Setting } from '@element-plus/icons-vue'
+
+import { useLikeStore } from '@/store/like'
 import { useMenuStore } from '@/store/menu'
-import { Folder } from '@element-plus/icons-vue'
+import { onMounted } from 'vue'
 
 const menu = useMenuStore()
+const like = useLikeStore()
+
+onMounted(() => {
+  if (like.cfg.folderDefOpen) {
+    menu.toggle('folder', true)
+  }
+})
 </script>
 
 <style lang="scss">

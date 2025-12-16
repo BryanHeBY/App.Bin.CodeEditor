@@ -62,10 +62,10 @@ export const LANG_OPTIONS = [...new Set(Object.values(LANG_MAP))].map((t) => ({
 }))
 
 export const THEME_OPTIONS: { label: string; value: string; dark: boolean }[] = [
-  { label: 'VS Light', value: 'vs', dark: false },
-  { label: 'VS Dark', value: 'vs-dark', dark: true },
-  { label: 'High Contrast Light', value: 'hc-light', dark: false },
-  { label: 'High Contrast Black', value: 'hc-black', dark: true },
+  { label: 'VS Light（浅色模式）', value: 'vs', dark: false },
+  { label: 'VS Dark（深色模式）', value: 'vs-dark', dark: true },
+  { label: 'High Contrast Light（浅色模式）', value: 'hc-light', dark: false },
+  { label: 'High Contrast Black（深色模式）', value: 'hc-black', dark: true },
 ]
 
 export const ENCODING_OPTIONS = [

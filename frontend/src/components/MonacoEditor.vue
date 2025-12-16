@@ -36,7 +36,7 @@
       style="width: 120px"
       size="small"
       filterable
-      placement="top"
+      placement="top-end"
       @change="changeEncode"
     >
       <el-option
@@ -46,8 +46,6 @@
         :value="item.value"
       />
     </el-select>
-
-    <el-button size="small" :icon="Setting" @click="like.open = true"></el-button>
   </div>
 </template>
 
@@ -55,7 +53,6 @@
 import { watch } from 'vue'
 import MonacoEditor from 'monaco-editor-vue3'
 import * as iconv from 'iconv-lite'
-import { Setting } from '@element-plus/icons-vue'
 
 import { useLikeStore } from '@/store/like'
 

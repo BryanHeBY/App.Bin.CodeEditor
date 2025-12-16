@@ -29,12 +29,14 @@ import { Folder, FolderOpened } from '@element-plus/icons-vue'
 import FileView from '@/components/FileView.vue'
 
 import { useEditorStore } from '@/store/editor'
+import { useLikeStore } from '@/store/like'
 
 import { HOST } from '@/utils/env'
 
 import type { LoadFunction } from 'element-plus'
 
 const editor = useEditorStore()
+const like = useLikeStore()
 
 const props = { label: 'label', children: 'zones', isLeaf: 'leaf' }
 
@@ -45,10 +47,12 @@ const loadNode: LoadFunction = async (node, resolve) => {
     params: { _api: 'dir', path: root },
   })
 
-  resolve([
-    ...data.data.dirs.map((i) => ({ label: i, value: `${root}/${i}`, leaf: false })),
-    ...data.data.files.map((i) => ({ label: i, value: `${root}/${i}`, leaf: true })),
-  ])
+  resolve(
+    [
+      ...data.data.dirs.map((i) => ({ label: i, value: `${root}/${i}`, leaf: false })),
+      ...data.data.files.map((i) => ({ label: i, value: `${root}/${i}`, leaf: true })),
+    ].filter((i) => !like.cfg.folderHidePrefix.some((x) => i.label.indexOf(x) === 0)),
+  )
 }
 </script>
 
