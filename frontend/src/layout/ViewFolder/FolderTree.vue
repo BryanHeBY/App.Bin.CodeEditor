@@ -4,11 +4,29 @@
     :load="loadNode"
     lazy
     @node-click="(v: { leaf: boolean; value: string }) => v.leaf && editor.view.add(v.value)"
-  />
+  >
+    <template #default="{ node, data }">
+      <div class="node-item">
+        <div class="icon">
+          <FileView v-if="node.isLeaf" :path="data.value" />
+
+          <el-icon v-else size="18">
+            <FolderOpened v-if="node.expanded" />
+            <Folder v-else />
+          </el-icon>
+        </div>
+
+        <div class="text">{{ node.label }}</div>
+      </div>
+    </template>
+  </el-tree>
 </template>
 
 <script lang="ts" setup>
 import axios from 'axios'
+import { Folder, FolderOpened } from '@element-plus/icons-vue'
+
+import FileView from '@/components/FileView.vue'
 
 import { useEditorStore } from '@/store/editor'
 
@@ -33,3 +51,20 @@ const loadNode: LoadFunction = async (node, resolve) => {
   ])
 }
 </script>
+
+<style lang="scss" scoped>
+.node-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  > .icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+</style>

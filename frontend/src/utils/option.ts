@@ -32,6 +32,30 @@ export const LANG_MAP: { [x: string]: string } = {
   default: 'plaintext',
 }
 
+export const FILE_MAP: { [x: string]: string } = {
+  jpg: 'img',
+  jpeg: 'img',
+  png: 'img',
+  gif: 'img',
+  svg: 'img',
+  webp: 'img',
+  avif: 'img',
+  apng: 'img',
+  ico: 'img',
+  zip: 'zip',
+  rar: 'zip',
+  '7z': 'zip',
+  gz: 'zip',
+  tgz: 'zip',
+  xz: 'zip',
+  iso: 'iso',
+  exe: 'iso',
+  dmg: 'iso',
+  pkg: 'iso',
+  deb: 'iso',
+  rpm: 'iso',
+}
+
 export const LANG_OPTIONS = [...new Set(Object.values(LANG_MAP))].map((t) => ({
   label: t,
   value: t,
