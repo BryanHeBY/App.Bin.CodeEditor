@@ -24,6 +24,7 @@ declare module 'vue' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    ElTree: typeof import('element-plus/es')['ElTree']
     MonacoEditor: typeof import('./src/components/MonacoEditor.vue')['default']
   }
 }
@@ -42,5 +43,6 @@ declare global {
   const ElTabPane: typeof import('element-plus/es')['ElTabPane']
   const ElTabs: typeof import('element-plus/es')['ElTabs']
   const ElTooltip: typeof import('element-plus/es')['ElTooltip']
+  const ElTree: typeof import('element-plus/es')['ElTree']
   const MonacoEditor: typeof import('./src/components/MonacoEditor.vue')['default']
 }

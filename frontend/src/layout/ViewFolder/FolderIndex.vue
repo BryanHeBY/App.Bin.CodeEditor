@@ -3,16 +3,15 @@
     <div class="head">
       <div class="title">目录</div>
 
-      <el-icon><CaretRight /></el-icon>
-
-      <el-icon><CaretRight /></el-icon>
+      <el-tooltip content="打开目录" placement="bottom">
+        <el-icon class="icon"><FolderOpened /></el-icon>
+      </el-tooltip>
     </div>
 
     <div class="content">
-      <div class="list">123</div>
-      <!-- <div class="tree">
-        <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick" />
-      </div> -->
+      <div class="list">
+        <FolderTree />
+      </div>
     </div>
 
     <ClickMove @move="(v) => (like.cfg.folderWidth += v.x)" />
@@ -20,9 +19,10 @@
 </template>
 
 <script lang="ts" setup>
-import { CaretRight } from '@element-plus/icons-vue'
+import { FolderOpened } from '@element-plus/icons-vue'
 
 import ClickMove from '@/components/ClickMove.vue'
+import FolderTree from './FolderTree.vue'
 
 import { useLikeStore } from '@/store/like'
 
@@ -40,9 +40,22 @@ const like = useLikeStore()
   > .head {
     display: flex;
     align-items: center;
+    gap: 12px;
     height: 40px;
     box-sizing: border-box;
     border-bottom: 1px solid var(--el-border-color);
+    padding: 0 12px;
+
+    > .title {
+      flex: 1;
+      font-size: 12px;
+      color: var(--el-text-color-regular);
+    }
+
+    > .icon {
+      color: var(--el-text-color-regular);
+      cursor: pointer;
+    }
   }
 
   > .content {

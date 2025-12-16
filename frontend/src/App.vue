@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import ViewMenu from '@/layout/ViewMenu.vue'
-import ViewFolder from '@/layout/ViewFolder.vue'
+import ViewFolder from '@/layout/ViewFolder/FolderIndex.vue'
 import ViewEditor from '@/layout/ViewEditor.vue'
 import DialogLike from '@/layout/DialogLike.vue'
 import DialogOpen from '@/layout/DialogOpen.vue'
