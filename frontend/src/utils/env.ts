@@ -4,4 +4,4 @@ export const HOST = IS_DEV ? 'http://127.0.0.1:17746' : '/cgi/ThirdParty/code.ed
 
 export const USER_CONFIG_PATH = IS_DEV
   ? '/Users/flex/Downloads/config.json'
-  : '/var/apps/code.editor/shares/config.json'
+  : '/var/apps/code.editor/shares/code.editor/config.json'

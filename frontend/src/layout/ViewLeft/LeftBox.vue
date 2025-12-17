@@ -34,7 +34,6 @@ const changeFolderWidth = (v: number) => {
 <style lang="scss">
 #left-view {
   position: relative;
-  z-index: 5;
   border-right: 1px solid var(--el-border-color);
 
   > .view {

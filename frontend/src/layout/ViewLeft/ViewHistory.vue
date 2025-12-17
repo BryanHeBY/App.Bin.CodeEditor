@@ -68,6 +68,9 @@ const editor = useEditorStore()
     --el-tree-text-color: var(--el-text-color-regular);
     color: var(--el-tree-text-color);
     font-size: var(--el-font-size-base);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 </style>

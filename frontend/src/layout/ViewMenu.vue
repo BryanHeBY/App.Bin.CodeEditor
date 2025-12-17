@@ -36,7 +36,6 @@ onMounted(() => {
 <style lang="scss">
 #ment-view {
   position: relative;
-  z-index: 10;
   display: flex;
   flex-direction: column;
   width: 40px;

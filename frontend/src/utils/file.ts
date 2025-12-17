@@ -9,7 +9,7 @@ export const getFullPath = (path: string) => {
     return path
   }
 
-  return `${HOST}/?_api=read&path=${encodeURIComponent(path)}`
+  return `${HOST}?_api=read&path=${encodeURIComponent(path)}`
 }
 
 export async function isBinaryContent(blob: Blob) {
