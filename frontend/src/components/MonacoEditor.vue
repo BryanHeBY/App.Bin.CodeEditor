@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from 'vue'
+import { onMounted, watch } from 'vue'
 import MonacoEditor from 'monaco-editor-vue3'
 import * as iconv from 'iconv-lite'
 
@@ -62,7 +62,7 @@ import useCode from '../hooks/useCode'
 import useEditor from '../hooks/useEditor'
 
 const $props = defineProps<{ path: string }>()
-const $emit = defineEmits<{ diff: [v: boolean] }>()
+const $emit = defineEmits<{ diff: [v: boolean]; error: [v?: string] }>()
 
 const like = useLikeStore()
 
@@ -70,10 +70,10 @@ defineExpose({
   save: () => save(),
 })
 
-const { code, save } = useCode({
-  path: $props.path,
+const { code, load, save } = useCode({
   confirm: () => like.cfg.confirm,
   onSave: () => $emit('diff', false),
+  onError: (v) => $emit('error', v),
 })
 
 const { editorDidMount, changeLang, changeTheme, changeOption } = useEditor({ onSave: save })
@@ -101,6 +101,10 @@ watch(
     changeOption(v)
   },
 )
+
+onMounted(() => {
+  load($props.path)
+})
 </script>
 
 <style lang="scss" scoped>

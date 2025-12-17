@@ -22,8 +22,11 @@
             />
           </div>
 
-          <div class="no-open" v-else-if="FILE_MAP[getFileSuffix(item.path)]">
-            <div class="t">编辑器不支持该文件</div>
+          <div
+            class="no-open"
+            v-else-if="FILE_MAP[getFileSuffix(item.path)] || errorMap[item.path]"
+          >
+            <div class="t">{{ errorMap[item.path] || '编辑器不支持该文件' }}</div>
           </div>
 
           <MonacoEditor
@@ -39,6 +42,7 @@
                 }
               }
             "
+            @error="(v) => (errorMap[item.path] = v)"
           />
         </el-tab-pane>
 
@@ -81,6 +85,7 @@ const editor = useEditorStore()
 const { active } = storeToRefs(editor)
 
 const editorRef = ref<{ save: () => void }[]>([])
+const errorMap = ref<{ [x: string]: string | undefined }>({})
 
 watch(
   () => active.value,
