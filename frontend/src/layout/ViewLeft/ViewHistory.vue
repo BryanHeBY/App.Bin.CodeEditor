@@ -1,7 +1,7 @@
 <template>
   <div class="view">
     <div class="head">
-      <div class="title">历史记录</div>
+      <div class="title">文件打开记录</div>
 
       <el-icon class="icon" @click="open.clearHistory()"><Delete /></el-icon>
     </div>

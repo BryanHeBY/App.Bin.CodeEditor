@@ -125,6 +125,8 @@ const addDir = (v: string) => {
   }
 
   user.cfg.dir.unshift(v)
+
+  user.update()
 }
 
 const deleteDir = (v: string) => {
@@ -135,6 +137,8 @@ const deleteDir = (v: string) => {
     if (cfg.value.folderDefOpen === v) {
       cfg.value.folderDefOpen = ''
     }
+
+    user.update()
   }
 }
 </script>
