@@ -95,9 +95,11 @@ import { useUserStore } from '@/store/user'
 import { useOpenStore } from '@/store/open'
 import { useEditorStore } from '@/store/editor'
 import { useLikeStore } from '@/store/like'
+import { useMenuStore } from '@/store/menu'
 
 const user = useUserStore()
 const open = useOpenStore()
+const menu = useMenuStore()
 const like = useLikeStore()
 const editor = useEditorStore()
 
@@ -115,6 +117,7 @@ onMounted(async () => {
 
 const changeDir = (v: string) => {
   like.cfg.folderActive = v
+  menu.open = 'folder'
   open.show = undefined
 }
 

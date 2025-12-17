@@ -20,7 +20,6 @@
 
           <div class="text">{{ getFileName(item.path) }}</div>
 
-          <div style="flex: 1"></div>
           <el-icon class="i" @click.stop="open.removeHistory(item.path)"><Close /></el-icon>
         </div>
       </div>
@@ -71,6 +70,7 @@ const editor = useEditorStore()
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex: 1;
   }
 }
 </style>
