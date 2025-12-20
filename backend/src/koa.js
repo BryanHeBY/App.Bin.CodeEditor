@@ -30,7 +30,7 @@ const getData = (ctx) => {
   } else {
     // 本地开发用不到这里
     const assets = path === '/' ? '/index.html' : path
-    return { api: '/read', query: { path: `/var/apps/code.editor/target/server/dist${assets}` }, cache: path !== '/' }
+    return { api: '/read', query: { path: `/var/apps/code-editor-hby/target/server/dist${assets}` }, cache: path !== '/' }
   }
 }
 

@@ -10,7 +10,7 @@ cat <<EOF
   <meta charset="UTF-8">
 </head>
 <body>
-  <form id="form" method="POST" action="/cgi/ThirdParty/code.editor/test.cgi" enctype="multipart/form-data">
+  <form id="form" method="POST" action="/cgi/ThirdParty/code-editor-hby/test.cgi" enctype="multipart/form-data">
     <input name="name" type="text" />
     <input name="file1" type="file" />
     <input name="file2" type="file" />

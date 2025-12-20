@@ -37,21 +37,18 @@
                 "vue",
                 "env",
                 "cgi",
-
                 "conf",
                 "dockerfile",
                 "bashrc",
                 "zshrc",
                 "log",
                 "bk",
-
                 "gitignore",
                 "npmrc",
                 "gitconfig",
                 "gitattributes",
                 "editorconfig",
-                "cgi"
-                "log",
+                "cgi",
                 "pdf",
                 "*"
             ]
