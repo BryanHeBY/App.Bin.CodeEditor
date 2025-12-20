@@ -4,8 +4,8 @@
       v-if="code.lang"
       v-model:value="code.value"
       :language="code.lang"
-      :theme="like.theme"
-      :options="{ fontSize: 14, automaticLayout: true }"
+      :theme="like.cfg.theme"
+      :options="{ automaticLayout: true, ...like.cfg.editorOption }"
       @editorDidMount="editorDidMount"
     />
   </div>
@@ -36,7 +36,7 @@
       style="width: 120px"
       size="small"
       filterable
-      placement="top"
+      placement="top-end"
       @change="changeEncode"
     >
       <el-option
@@ -46,39 +46,37 @@
         :value="item.value"
       />
     </el-select>
-
-    <el-button size="small" :icon="Setting" @click="$emit('like')"></el-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, watch } from 'vue'
+import { onMounted, watch } from 'vue'
 import MonacoEditor from 'monaco-editor-vue3'
 import * as iconv from 'iconv-lite'
-import { Setting } from '@element-plus/icons-vue'
+
+import { useLikeStore } from '@/store/like'
 
 import { LANG_OPTIONS, ENCODING_OPTIONS } from '@/utils/option'
 
-import { type LikeModel } from '../hooks/useLike'
 import useCode from '../hooks/useCode'
 import useEditor from '../hooks/useEditor'
 
-const $props = defineProps<{ path: string; like: LikeModel }>()
-const $emit = defineEmits<{ like: []; diff: [v: boolean] }>()
+const $props = defineProps<{ path: string }>()
+const $emit = defineEmits<{ diff: [v: boolean]; error: [v?: string] }>()
+
+const like = useLikeStore()
 
 defineExpose({
   save: () => save(),
 })
 
-const editorLike = reactive({ ...$props.like })
-
-const { code, save } = useCode({
-  path: $props.path,
-  confirm: () => editorLike.confirm,
+const { code, load, save } = useCode({
+  confirm: () => like.cfg.confirm,
   onSave: () => $emit('diff', false),
+  onError: (v) => $emit('error', v),
 })
 
-const { editorDidMount, changeLang, changeTheme, changeSize } = useEditor({ onSave: save })
+const { editorDidMount, changeLang, changeTheme, changeOption } = useEditor({ onSave: save })
 
 const changeEncode = async (v: string) => {
   const buffer = await code.blob.arrayBuffer()
@@ -86,31 +84,27 @@ const changeEncode = async (v: string) => {
 }
 
 watch(
-  () => $props.like.confirm,
-  (v) => {
-    editorLike.confirm = v
-  },
-)
-watch(
-  () => $props.like.theme,
-  (v) => {
-    editorLike.theme = v
-    changeTheme(v)
-  },
-)
-watch(
-  () => $props.like.fontSize,
-  (v) => {
-    editorLike.fontSize = v
-    changeSize(v)
-  },
-)
-watch(
   () => code.value,
   (v) => {
     $emit('diff', v !== code.org)
   },
 )
+watch(
+  () => like.cfg.theme,
+  (v) => {
+    changeTheme(v)
+  },
+)
+watch(
+  () => like.cfg.editorOption,
+  (v) => {
+    changeOption(v)
+  },
+)
+
+onMounted(() => {
+  load($props.path)
+})
 </script>
 
 <style lang="scss" scoped>

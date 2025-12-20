@@ -3,9 +3,9 @@ name: Build
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-and-release:
@@ -39,6 +39,16 @@ jobs:
         run: |
           sed -i "s/version=0.0.1/version=${{ steps.read_version.outputs.version }}/" app/manifest
 
+      - name: Get changelog
+        id: read_log
+        run: |
+          CHANGELOG=$(jq -r '.changelog' package.json)
+          echo "changelog=$CHANGELOG" >> $GITHUB_OUTPUT
+
+      - name: Update changelog in manifest file
+        run: |
+          sed -i "s|changelog=changelog|changelog=${{ steps.read_log.outputs.changelog }}|" app/manifest
+
       - name: Build Package
         run: |
           chmod +x ./build/fnpack-1.0.4-linux-amd64
@@ -51,5 +61,10 @@ jobs:
           name: v${{ steps.read_version.outputs.version}}
           body: |
             [更新日志](https://github.com/FNOSP/App.Bin.CodeEditor/blob/main/CHANGELOG.md)
+<<<<<<< HEAD
           artifacts: "code.editor-hby.fpk"
           token: ${{ secrets.GITHUB_TOKEN }}
+=======
+          artifacts: "code.editor.fpk"
+          token: ${{ secrets.GITHUB_TOKEN }}
+>>>>>>> 25d4c12cfda9c74fd4888035a98a65a84bc08ada

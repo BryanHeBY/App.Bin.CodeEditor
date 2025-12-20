@@ -37,6 +37,7 @@
                 "vue",
                 "env",
                 "cgi",
+<<<<<<< HEAD
 
                 "conf",
                 "dockerfile",
@@ -51,6 +52,9 @@
                 "gitattributes",
                 "editorconfig",
                 "cgi"
+=======
+                "log"
+>>>>>>> 25d4c12cfda9c74fd4888035a98a65a84bc08ada
             ]
         }
     }

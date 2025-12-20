@@ -17,9 +17,6 @@ module.exports = async function read({ query }) {
       return { code: 400, msg: "路径不是文件", data: query };
     }
 
-    const testFd = fs.openSync(path, "r");
-    fs.closeSync(testFd);
-
     if (query.cache) {
       const maxAge = 365 * 24 * 60 * 60;
 

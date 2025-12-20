@@ -10,13 +10,16 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
     "axios": "^1.13.2",
     "buffer": "^6.0.3",
-    "element-plus": "^2.11.7",
+    "element-plus": "^2.11.9",
     "iconv-lite": "^0.7.0",
+    "lodash": "^4.17.21",
     "monaco-editor": "^0.54.0",
     "monaco-editor-vue3": "^1.0.4",
     "normalize.css": "^8.0.1",
+    "pinia": "^3.0.4",
     "vue": "^3.5.22"
   },
   "devDependencies": {

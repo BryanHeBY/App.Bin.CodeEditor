@@ -12,37 +12,43 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ClickMove: typeof import('./src/components/ClickMove.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElImage: typeof import('element-plus/es')['ElImage']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
     ElOption: typeof import('element-plus/es')['ElOption']
+    ElOptionGroup: typeof import('element-plus/es')['ElOptionGroup']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
-    LikeDialog: typeof import('./src/components/LikeDialog.vue')['default']
+    ElTree: typeof import('element-plus/es')['ElTree']
+    FileView: typeof import('./src/components/FileView.vue')['default']
     MonacoEditor: typeof import('./src/components/MonacoEditor.vue')['default']
-    PathDialog: typeof import('./src/components/PathDialog.vue')['default']
   }
 }
 
 // For TSX support
 declare global {
+  const ClickMove: typeof import('./src/components/ClickMove.vue')['default']
   const ElButton: typeof import('element-plus/es')['ElButton']
   const ElDialog: typeof import('element-plus/es')['ElDialog']
   const ElIcon: typeof import('element-plus/es')['ElIcon']
+  const ElImage: typeof import('element-plus/es')['ElImage']
   const ElInput: typeof import('element-plus/es')['ElInput']
   const ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
   const ElOption: typeof import('element-plus/es')['ElOption']
+  const ElOptionGroup: typeof import('element-plus/es')['ElOptionGroup']
   const ElSelect: typeof import('element-plus/es')['ElSelect']
   const ElSwitch: typeof import('element-plus/es')['ElSwitch']
   const ElTabPane: typeof import('element-plus/es')['ElTabPane']
   const ElTabs: typeof import('element-plus/es')['ElTabs']
   const ElTooltip: typeof import('element-plus/es')['ElTooltip']
-  const LikeDialog: typeof import('./src/components/LikeDialog.vue')['default']
+  const ElTree: typeof import('element-plus/es')['ElTree']
+  const FileView: typeof import('./src/components/FileView.vue')['default']
   const MonacoEditor: typeof import('./src/components/MonacoEditor.vue')['default']
-  const PathDialog: typeof import('./src/components/PathDialog.vue')['default']
 }

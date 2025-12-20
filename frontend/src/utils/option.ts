@@ -32,16 +32,40 @@ export const LANG_MAP: { [x: string]: string } = {
   default: 'plaintext',
 }
 
+export const FILE_MAP: { [x: string]: string } = {
+  jpg: 'img',
+  jpeg: 'img',
+  png: 'img',
+  gif: 'img',
+  svg: 'img',
+  webp: 'img',
+  avif: 'img',
+  apng: 'img',
+  ico: 'img',
+  zip: 'zip',
+  rar: 'zip',
+  '7z': 'zip',
+  gz: 'zip',
+  tgz: 'zip',
+  xz: 'zip',
+  iso: 'iso',
+  exe: 'iso',
+  dmg: 'iso',
+  pkg: 'iso',
+  deb: 'iso',
+  rpm: 'iso',
+}
+
 export const LANG_OPTIONS = [...new Set(Object.values(LANG_MAP))].map((t) => ({
   label: t,
   value: t,
 }))
 
 export const THEME_OPTIONS: { label: string; value: string; dark: boolean }[] = [
-  { label: 'VS Light', value: 'vs', dark: false },
-  { label: 'VS Dark', value: 'vs-dark', dark: true },
-  { label: 'High Contrast Light', value: 'hc-light', dark: false },
-  { label: 'High Contrast Black', value: 'hc-black', dark: true },
+  { label: 'VS Light（浅色模式）', value: 'vs', dark: false },
+  { label: 'VS Dark（深色模式）', value: 'vs-dark', dark: true },
+  { label: 'High Contrast Light（浅色模式）', value: 'hc-light', dark: false },
+  { label: 'High Contrast Black（深色模式）', value: 'hc-black', dark: true },
 ]
 
 export const ENCODING_OPTIONS = [

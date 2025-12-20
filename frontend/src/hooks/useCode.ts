@@ -1,24 +1,39 @@
-import { onMounted, reactive } from 'vue'
+import { reactive } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import axios from 'axios'
 
 import { HOST } from '@/utils/env'
 import { LANG_MAP } from '@/utils/option'
+import { isBinaryContent } from '@/utils/file'
+
+import { useOpenStore } from '@/store/open'
+
+interface OptionModel {
+  confirm: () => boolean
+  onSave: () => void
+  onError: (v?: string) => void
+}
 
 interface CodeModel {
-  blob: any
+  path: string
+  blob: Blob
   org: string
   value: string
   lang: string
   encode: string
 }
 
-export default function useCode(option: {
-  path: string
-  confirm: () => boolean
-  onSave: () => void
-}) {
-  const code = reactive<CodeModel>({ blob: [], org: '', value: '', lang: '', encode: 'utf8' })
+export default function useCode(option: OptionModel) {
+  const open = useOpenStore()
+
+  const code = reactive<CodeModel>({
+    path: '',
+    blob: new Blob(),
+    org: '',
+    value: '',
+    lang: '',
+    encode: 'utf8',
+  })
 
   const load = async (path: string) => {
     try {
@@ -32,7 +47,15 @@ export default function useCode(option: {
         responseType: 'blob',
       })
 
+      if (await isBinaryContent(data)) {
+        option.onError('不支持二进制文件的编辑')
+        open.removeHistory(path)
+        return
+      }
+
       code.blob = data
+
+      code.path = path
 
       code.org = code.value = await data.text()
 
@@ -73,7 +96,7 @@ export default function useCode(option: {
         {
           encode: code.encode,
           value: code.value,
-          path: option.path,
+          path: code.path,
           force,
         },
         { params: { _api: 'save' } },
@@ -101,9 +124,5 @@ export default function useCode(option: {
     }
   }
 
-  onMounted(() => {
-    load(option.path)
-  })
-
-  return { code, save }
+  return { code, load, save }
 }
