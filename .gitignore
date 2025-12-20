@@ -48,3 +48,5 @@ config.development.js
 adapter.development.js
 
 backend/src/public
+
+*.fpk

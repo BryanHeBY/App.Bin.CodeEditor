@@ -1,5 +1,5 @@
 {
-  "name": "code.editor.web",
+  "name": "code-editor-hby.web",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",

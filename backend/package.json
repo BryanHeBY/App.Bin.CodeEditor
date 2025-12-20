@@ -1,5 +1,5 @@
 {
-  "name": "code.editor.server",
+  "name": "code-editor-hby.server",
   "scripts": {
     "dev": "node src/koa.js",
     "build": "pkg -t node16-linux-x64 ./src/cgi.js --output ../app/app/server/api"

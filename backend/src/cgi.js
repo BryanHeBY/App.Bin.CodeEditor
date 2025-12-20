@@ -7,7 +7,7 @@ async function getData() {
   const env = process.env;
 
   const assets = env.PATH_INFO.replace(
-    "/cgi/ThirdParty/code.editor/index.cgi",
+    "/cgi/ThirdParty/code-editor-hby/index.cgi",
     ""
   );
 
@@ -18,7 +18,7 @@ async function getData() {
     return {
       env,
       api: "read",
-      query: { path: `/var/apps/code.editor/target/server/dist${path}`, cache },
+      query: { path: `/var/apps/code-editor-hby/target/server/dist${path}`, cache },
       body: {},
     };
   }

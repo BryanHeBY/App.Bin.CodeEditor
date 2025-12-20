@@ -1,8 +1,8 @@
 # App.Bin.CodeEditor
 
-应用包名：code.editor
+应用包名：code-editor-hby
 
-显示名称：代码编辑器
+显示名称：CodeEditor
 
 开发者：Flex_7746
 

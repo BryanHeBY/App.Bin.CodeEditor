@@ -2,10 +2,10 @@
     "data-share": {
         "shares": [
             {
-                "name": "code.editor",
+                "name": "code-editor-hby",
                 "permission": {
                     "rw": [
-                        "code.editor"
+                        "code-editor-hby"
                     ]
                 }
             }

@@ -1,5 +1,5 @@
 {
-  "name": "code.editor",
+  "name": "code-editor-hby",
   "version": "1.3.3",
   "scripts": {
     "dev": "node src/app.js",
