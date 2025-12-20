@@ -7,3 +7,7 @@ export const USER_CONFIG_PATH = IS_DEV
   : '/var/apps/code-editor-hby/shares/code-editor-hby/config.json'
 
 export const APP_DIR_PATH = IS_DEV ? '/Users/flex/Downloads' : '/var/apps/code-editor-hby/shares/code-editor-hby'
+
+export const USER_CONFIG_PATH = IS_DEV
+  ? '/Users/flex/Downloads/config.json'
+  : '/var/apps/code-editor-hby/shares/code-editor-hby/config.json'
