@@ -82,12 +82,12 @@ jobs:
       - name: Show files
         run: ls
 
-      # - name: Release
-      #   uses: ncipollo/release-action@v1.20.0
-      #   with:
-      #     tag: v${{ steps.read_version.outputs.version}}
-      #     name: v${{ steps.read_version.outputs.version}}
-      #     body: |
-      #       [更新日志](https://github.com/FNOSP/App.Bin.CodeEditor/blob/main/CHANGELOG.md)
-      #     artifacts: "code-editor-hby.fpk"
-      #     token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Release
+        uses: ncipollo/release-action@v1.20.0
+        with:
+          tag: v${{ steps.read_version.outputs.version}}
+          name: v${{ steps.read_version.outputs.version}}
+          body: |
+            [更新日志](https://github.com/FNOSP/App.Bin.CodeEditor/blob/main/CHANGELOG.md)
+          artifacts: "code-editor-hby.x86.fpk,code-editor-hby.arm.fpk"
+          token: ${{ secrets.GITHUB_TOKEN }}
