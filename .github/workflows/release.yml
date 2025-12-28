@@ -64,9 +64,6 @@ jobs:
       - name: Build x86 package
         run: mv code-editor-hby.fpk code-editor-hby.x86.fpk
 
-      - name: Clear x86 api
-        run: rm ./app/app/server/api
-
       - name: Build arm backend
         run: npm run build:backend:arm
 
@@ -81,9 +78,6 @@ jobs:
 
       - name: Build arm package
         run: mv code-editor-hby.fpk code-editor-hby.arm.fpk
-
-      - name: Show files
-        run: ls
 
       - name: Release
         uses: ncipollo/release-action@v1.20.0
