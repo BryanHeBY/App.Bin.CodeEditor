@@ -58,8 +58,8 @@ jobs:
 
       - name: Build x86 package
         run: |
-          chmod +x ./build/fnpack-1.0.4-linux-amd64
-          ./build/fnpack-1.0.4-linux-amd64 build app
+          chmod +x ./build/fnpack-1.0.4-darwin-arm64
+          ./build/fnpack-1.0.4-darwin-arm64 build app
 
       - name: Build x86 package
         run: mv code-editor-hby.fpk code-editor-hby.x86.fpk
@@ -73,8 +73,8 @@ jobs:
 
       - name: Build arm package
         run: |
-          chmod +x ./build/fnpack-1.0.4-linux-amd64
-          ./build/fnpack-1.0.4-linux-amd64 build app
+          chmod +x ./build/fnpack-1.0.4-darwin-arm64
+          ./build/fnpack-1.0.4-darwin-arm64 build app
 
       - name: Build arm package
         run: mv code-editor-hby.fpk code-editor-hby.arm.fpk
