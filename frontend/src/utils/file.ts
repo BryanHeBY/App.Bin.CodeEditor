@@ -81,10 +81,12 @@ export const getEncodeValue = (buffer: ArrayBuffer) => {
   return { encode, value: new TextDecoder(encode).decode(buffer) }
 }
 
-export const readFile = async (path: string, responseType: 'json' | 'arraybuffer' | 'text' = 'json', dir = false) => {
-  const { data, headers } = await (getFileSuffix(path) === 'cgi'
-    ? api.get('/read', { params: { path }, responseType })
-    : axios(getFullPath(path), { params: dir ? { dir: 1 } : undefined, responseType }))
+export const readPath = async <T = any>(opt: { path: string; responseType?: 'json' | 'arraybuffer' | 'text'; dir?: boolean }) => {
+  const responseType = opt.responseType || 'json'
+
+  const { data, headers } = await (getFileSuffix(opt.path) === 'cgi'
+    ? api.get<T>('/read', { params: { path: opt.path }, responseType })
+    : axios<T>(getFullPath(opt.path), { params: { dir: opt.dir ? 1 : undefined }, responseType }))
 
   return {
     data,
@@ -93,11 +95,11 @@ export const readFile = async (path: string, responseType: 'json' | 'arraybuffer
   }
 }
 
-export const saveFile = async (opt: { path: string; force?: 0 | 1; file: Blob | File }) => {
+export const saveFile = async (opt: { path: string; force?: boolean; file: Blob | File }) => {
   const formData = new FormData()
 
   formData.append('path', opt.path)
-  formData.append('force', opt.force ? '1' : '0')
+  opt.force && formData.append('force', '1')
   formData.append('file', opt.file)
 
   const { data } = await api.post<{ code: number; msg: string; data: { size: number; time: string } }>('/save', formData)
